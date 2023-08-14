@@ -1,0 +1,16 @@
+------------------------------------------------------------------
+*COMO DETERMINAR UM MODELO MATEMATICO DE MAXIMIZAÇAO/MINIMIZAÇAO:*
+
+1 - Variaveis
+Quantidade que afeta o objetivo do problema
+
+2 - Funçao objetivo:
+Ex: Lucro Max, Lucro Min etc.
+
+3 - Restriçoes:
+Definir inequaçoes
+
+4 - Modelo:
+Sintese dos dados
+--------------------------------------------------------------------
+

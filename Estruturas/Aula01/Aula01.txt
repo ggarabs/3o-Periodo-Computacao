@@ -1,0 +1,9 @@
+Diferença entre struct e classe:
+ - Encapsulamento.
+ - Paradigma do Projeto. 
+
+Lista linear: L = [e0, e1, e2, e3, ..., en-1].
+
+Alocacao de Memoria:
+ - Estatica(determina antes) x Dinamica(determina em tempo de execuçao)
+ - Sequencial(malloc) x Encadeada

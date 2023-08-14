@@ -1,0 +1,3 @@
+Tipo Primitivo x Tipo Referencia em Java:
+ - Primitivo: Int, Float, Double, Long;
+ - Referencia: Classes (usa ponteiros indiretamente), Tipos Dinamicos (ArrayList, pairs);
