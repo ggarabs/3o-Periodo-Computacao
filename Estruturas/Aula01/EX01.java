@@ -17,7 +17,7 @@ public class EX01{
 		int volumeBarril = 200*1000;
 		float volumeTanque = PI*r*r*h;
 
-		System.out.printf("O numero minimo de barris necessarios para preencher %d tanques eh %d\n", M, (int)(Math.ceil(M*volumeTanque/volumeBarril)));
+		System.out.printf("O numero minimo de barris necessarios para preencher %d tanques eh %d\n", M, (int)Math.ceil(M*volumeTanque/volumeBarril));
 
 		entrada.close();
 	}
