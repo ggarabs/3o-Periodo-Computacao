@@ -3,13 +3,13 @@ import java.util.*;
 public class EX05{
 	public static void main(String[] args){
 		Scanner entrada = new Scanner(System.in);
-		final int LIM_SUP = 2001;
+		final int LIM_SUP = 2007;
 
 		System.out.print("Digite o numero N de elementos do vetor: ");
 		int N = entrada.nextInt();
 
-		int vetor[] = new int[LIM_SUP];
-		int qtd[] = new int[LIM_SUP];
+		int vetor[] = new int[N];
+		int qtd[] = new int[N];
 		boolean vis[] = new boolean[LIM_SUP];
 
 		for(int i = 0; i < N; i++){
@@ -18,7 +18,7 @@ public class EX05{
 			qtd[vetor[i]]++;
 		}
 
-		int vetor_resp[] = new int[2*LIM_SUP];
+		int vetor_resp[] = new int[2*N];
 
 		System.out.print("Vetor resposta: ");
 
