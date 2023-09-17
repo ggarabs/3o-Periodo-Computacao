@@ -1,0 +1,11 @@
+ _________________________________________
+|                 M E N U                 |
+|                                         |
+|     1 - Add element on 1st Stream       |
+|     2 - Add element on 2nd Stream       |
+|     3 - Add element on 3rd Stream       |
+|     4 - Print all stream elements       |
+|     5 - Multiplex streams               |
+|     6 - Print multiplexed stream        |
+|     7 - Close                           |
+|_________________________________________|
