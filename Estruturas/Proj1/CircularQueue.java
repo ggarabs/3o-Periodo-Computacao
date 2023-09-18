@@ -55,36 +55,47 @@ public class CircularQueue{
 		}
     }
 
-    public void PrintElementsOfStream(int ID){ //Imprime os elementos da fila
-		boolean isMUX = false;
-		if(ID == 4) isMUX = true;
-		if(isMUX) System.out.print("\nMultiplexed stream: [");
-        else System.out.printf("Stream %d: [", ID+1);
+    public boolean MultiplexStreams(CircularQueue F[]){ //Realiza a multiplexação
+		if(F[0].isEmpty() && F[1].isEmpty() && F[2].isEmpty()){
+			return false;
+		}
+        int cont = 0; //Inicializa contador e um vetor interatores
+        while(!F[0].isEmpty() || !F[1].isEmpty() || !F[2].isEmpty()){
+            if(!F[cont % 3].isEmpty()){ //Verifica se ainda há elementos não processados na fila
+                this.enqueue(F[cont % 3].dequeue()); //Insere o elemento da frente da fila atual para a fila MUXF
+            }
+            cont++;
+        }
+		return true;
+    }
+
+    public int PrintElementsOfStream(int ID){ //Imprime os elementos da fila
+		if(this.isEmpty()){
+			return 0;
+		}
+        System.out.printf("Stream %d: [", ID+1);
         for(int i = 0; i < this.size(); i++){
-			if(isMUX){
-				System.out.printf("(%d,%d)", this.front().getData(), this.front().getID()+1);
-            	if(i != this.size()-1) System.out.printf(", "); //Separa o elemento com virgula
-            	this.enqueue(this.dequeue());
-			}else{
-				System.out.printf("%d", this.front().getData()); //Pega o elemento inicial da fila
-				if(i != this.size()-1) System.out.printf(", "); //Separa o elemento com virgula
-            	this.enqueue(this.dequeue());
-			}
+			System.out.printf("%d", this.front().getData()); //Pega o elemento inicial da fila
+			if(i != this.size()-1) System.out.printf(", "); //Separa o elemento com virgula
+			this.enqueue(this.dequeue());
+        }
+        System.out.printf("]\n");
+		return 1;
+    }
+
+	public void PrintElementsOfMUXStream(){ //Imprime os elementos da fila
+		if(this.isEmpty()){
+			System.out.print("\nMultiplexed stream are Empty! Please add elements to the streams and try multiplexing again!\n");
+			return;
+		}
+		System.out.print("\nMultiplexed stream: [");
+		int tam = this.size();
+        for(int i = 0; i < tam; i++){
+			System.out.printf("(%d,%d)", this.front().getData(), this.front().getID()+1);
+			if(i != tam-1) System.out.printf(", "); //Separa o elemento com virgula
+			this.dequeue();
         }
         System.out.printf("]\n");
     }
 
-    public void MultiplexStreams(CircularQueue F[]){ //Realiza a multiplexação
-		while(!this.isEmpty()) this.dequeue();
-        int cont = 0, iterators[] = {0, 0, 0}; //Inicializa contador e um vetor interatores
-
-        while(iterators[0] < F[0].size() || iterators[1] < F[1].size() || iterators[2] < F[2].size()){
-            if(iterators[cont%3] < F[cont % 3].size()){ //Verifica se ainda há elementos não processados na fila
-                this.enqueue(F[cont%3].front()); //Insere o elemento da frente da fila atual para a fila MUXF
-                F[cont % 3].enqueue(F[cont % 3].dequeue()); //Coloca o elemento da frente para trás na fila
-                iterators[cont%3]++; //Indica que um elemento da fila atual foi movido
-            }
-            cont++;
-        }
-    }
 }
