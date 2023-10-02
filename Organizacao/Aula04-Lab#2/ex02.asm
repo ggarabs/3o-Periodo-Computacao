@@ -1,10 +1,13 @@
 .data
 Notas_Alunos:		.space 40	#Memoria alocada para notas (vetor de 10 elementos x 4 bytes de cada nota)
+Contador_Alunos:	.word 0	#Contador de alunos para mensagem
 Contador_Aprovados:	.word 0	#Contador de alunos aprovados
 Contador_Reprovados:	.word 0	#Contador de alunos repovados
 Contador_Zeros:	.word 0	#Contador de alunos zerados
 #Mensagens de sistema:
-Msg_Solicitar:	.asciiz "Digite a nota do aluno: "
+Titulo:	.asciiz "Sistema de Notas:\n"
+Msg_Solicitar1:	.asciiz "Digite a nota do "
+Msg_Solicitar2: .asciiz "º Aluno: "
 Msg_Notas:	.asciiz "\nNotas dos alunos: "
 Msg_Aprovados:	.asciiz "\nA quantidade de alunos aprovados: "
 Msg_Reprovados:	.asciiz "\nA quantidade de alunos reprovados: "
@@ -12,6 +15,7 @@ Msg_Zerados:	.asciiz "\nA quantidade de alunos com nota igual a zero: "
 Simbolo_Chave1:	.asciiz "Vetor de notas: ["
 Simbolo_Chave2:	.asciiz "]"
 Virgula:	.asciiz ", "
+Msg_Erro: 	.asciiz "Nota invalida, digite uma nota maior que zero e menor que dez: "
 
 .text
 Main:
@@ -20,18 +24,57 @@ Main:
     li $t1, 10            #Quantidade de alunos
     la $t2, Notas_Alunos  #Endereço do vetor de notas
     li $t3, 6             #Variavel de quem foi aprovado (maior que 6) para comparação
-
-Solicitar_Notas_Dos_Alunos:
-    #Solicita a nota do usuário
+    
     li $v0, 4
-    la $a0, Msg_Solicitar  #Carrega a mensagem de inserir nota
+    la $a0, Titulo #Carrega a mensagem de titulo
     syscall
     
+    j Solicitar_Notas_Dos_Alunos #Pula para solicitar a 1º nota
+
+Nota_Invalida: #Este bloco é usado apenas se ele digitou uma nota invalida
+    li $v0, 4
+    la $a0, Msg_Erro  #Mostra a mensagem de erro
+    syscall
+ 
     li $v0, 5              #ler um inteiro (nota)
     syscall
     
     #Guarda a nota no vetor de notas
     sw $v0, 0($t2)
+    
+    bltz $v0, Nota_Invalida #Se a nota digitada for menor que zero apresenta mensagem de erro
+    bgt $v0, 10, Nota_Invalida #Se a nota digitada for maior que 10 apresenta mensagem de erro
+    
+    j Correto # Guarda a nota digita certa agora
+
+Solicitar_Notas_Dos_Alunos:
+    #Solicita a nota do usuário
+    li $v0, 4
+    la $a0, Msg_Solicitar1  #Carrega a mensagem de inserir nota
+    syscall
+    
+    lw $t5, Contador_Alunos   #Carrega o contador de alunos para o print
+    addi $t5, $t5, 1          #Incrementa a contagem a cada aluno
+    sw $t5, Contador_Alunos   #Guarda a nova contagem
+    
+    lw $a0, Contador_Alunos  #Carrega a quantidade do aluno atual
+    li $v0, 1                #Imprime o inteiro
+    syscall
+    
+    li $v0, 4
+    la $a0, Msg_Solicitar2 #Carrega a mensagem "Aluno"
+    syscall
+    
+    li $v0, 5              #ler um inteiro (nota)
+    syscall
+    
+Correto: #linha se ele digitou correto
+    #Guarda a nota no vetor de notas
+    sw $v0, 0($t2)
+    
+    bltz $v0, Nota_Invalida #Se a nota digitada for menor que zero apresenta mensagem de erro
+    bgt $v0, 10, Nota_Invalida #Se a nota digitada for maior que 10 apresenta mensagem de erro
+    
     
     #Verifica se a nota é zero se for vai para o bloco de zeros
     beqz $v0, Notas_Zeradas
